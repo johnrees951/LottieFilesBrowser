@@ -6,6 +6,18 @@ jobs:
       - image: circleci/android:api-25-alpha
     environment:
       JVM_OPTS: -Xmx3200m
+      PATH: "~/$CIRCLE_PROJECT_REPONAME/gradle-4.10.1/bin:$PATH"
+    dependencies:
+      pre:
+       # Install Android stuffs
+      - wget "https://services.gradle.org/distributions/gradle-4.10.1-all.zip"; unzip gradle-4.10.1-all.zip
+      - echo y | android update sdk --no-ui --all --filter tool
+      - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
+      - echo y | android update sdk --no-ui --all --filter extra-android-support
+      - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
+      - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
+      - echo y | android update sdk --no-ui --all --filter android-25
+      - echo y | android update sdk --no-ui --all --filter build-tools-25.0.2
     steps:
       - checkout
       - restore_cache:
